@@ -61,4 +61,76 @@ var playerDirector=(function(){
 		}	    
 	};
 	
-})
+	/************玩家换队*******************/
+	operations.changeTeam=function(player,newTeamColor){ //玩家换队
+		operations.removePlayer(player); //从原队伍中删除
+	};
+	
+	operations.playerDead=function(player){ //玩家死亡
+		var teamColor=player.teamColor,
+		    teamPlayers=player[teamColor];  //玩家所在队伍
+		
+		var all_dead=true;
+		
+		for(var i=0,player;player=teamPlayers[i++];){
+			if(player.state !== 'dead'){
+				all_dead=false;
+				break;
+			}
+		}
+		
+		if(all_dead===true){  //全部死亡
+			for(var i=0,player;player=teamPlayers[i++]){
+				player.lose();  //本队所有玩家lose
+			}
+			for(var color in players){
+				if(color !== teamColor){
+					var teamPlayers=players[color];  //其他队伍的玩家
+					for(var i=0,player;player=teamPlayers[i++]){
+						player.win();   //其他队伍所有玩家win
+					}
+				}
+			}
+		}
+	};
+	
+	var ReceiveMessage=function(){
+		var message=Array.prototype.shift.call(arguments);  //arguments的第一个参数为消息名称
+		operations[message].apply(this,arguments);
+	};
+	
+	return {
+		ReceiveMessage:ReceiveMessage
+	}
+})();
+
+//红队
+var player1=playerFactory('皮蛋','red');
+var player2=playerFactory('小乖','red');
+var player3=playerFactory('宝宝','red');
+var player4=playerFactory('小强','red');
+
+
+//蓝队：
+var player5=playerFactory('黑妞','blue');
+var player6=playerFactory('葱头','blue');
+var player7=playerFactory('潘墩','blue');
+var player8=playerFactory('海盗','blue');
+
+//player1.die();
+//player2.die();
+//player3.die();
+//player4.die();
+
+//假设皮蛋和小乖掉线
+//player1.remove();
+//player2.remove();
+//player3.die();
+//player4.die();
+
+
+//假设皮蛋从红队叛变到蓝队
+player1.changeTeam('blue');
+player2.die();
+player3.die();
+player4.die();
