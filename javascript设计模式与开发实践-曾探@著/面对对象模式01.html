@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="div1">点我绑定事件</div>
+		<button id="loginBtn">登录</button>
+		
+		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+		<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="test01.js"></script>
+		<script src="AOP动态织入.js"></script>
+		<script src="柯里化函数.js"></script>
+		<script src="函数节流.js" type="text/javascript" charset="utf-8"></script>
+		<script src="分时函数.js"></script>
+		<script src="惰性加载函数-嗅探浏览器工作.js" type="text/javascript" charset="utf-8"></script>
+		<script src="单例模式-惰性加载.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				//         	 建实例
+          var vm =new  Vue({
+             	data:{
+             	  //tab
+             	  tab_nav_falg:true,
+             	  true_color:'rgb(255,133,48)',
+             	  default_color:'#333'
+             	}
+            });
+				var newmoulde=new careateCommand(vm);
+				console.log(newmoulde);
+				newmoulde.test01();
+				newmoulde.test02();
+			})
+		</script>
+	</body>
+</html>
