@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	<script type="text/javascript">
+//		只能IE浏览器中使用ActiveXObject  
+
+function read_excel(){
+//debugger;
+   var filePath="C:\Users\Administrator\Desktop\同事联系簿.xlsx"; //要读取的xls
+   var col_start=1; //从第1列开始读取
+   var row_start=1; //从第3行开始读取
+   var tempStr='';
+   try{
+       var oXL = new ActiveXObject("Excel.application"); //创建Excel.Application对象
+   }catch(err)
+   {
+       alert(err);
+   }
+   var oWB = oXL.Workbooks.open(filePath);
+  // oWB.worksheets(sheet_id).select();
+   var oSheet = oWB.ActiveSheet;
+   var rows = oSheet.usedrange.rows.count;
+   var cols = oSheet.usedrange.Columns.count;
+   //var colcount=oXL.Worksheets(sheet_id).UsedRange.Cells.Rows.Count ;
+   for(var i=row_start;i<=rows;i++){
+    for(var j=col_start;j<=cols;j++){
+    tempStr+=($.trim(oSheet.Cells(i,j).value))+" ";
+    }
+       /* if (typeof(oSheet.Cells(i,8).value)=='date'){ //处理第8列部分单元格内容是日期格式时的读取问题
+           d= new Date(oSheet.Cells(i,8).value);
+           temp_time=d.getFullYear()+"-"+(d.getMonth() + 1)+"-"+d.getDate();
+       }else
+           temp_time=$.trim(oSheet.Cells(i,7).value.toString());
+       tempStr+=($.trim(oSheet.Cells(i,2).value)+" "+$.trim(oSheet.Cells(i,4).value)+" "+$.trim(oSheet.Cells(i,6).value.toString())+" "+temp_time+"\n");
+       //读取第2、4、6、8列内容 */
+   }
+   return tempStr; //返回
+   oXL.Quit();
+   CollectGarbage();
+}
+</script>
+	</body>
+</html>

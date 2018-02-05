@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+function want() {
+    console.log('这是你想要执行的代码');
+	//  console.log(i++);
+	var num=0;
+	for (var i=0; i<6;i++) {
+		num=i;
+	   }
+	console.log(num);
+	   return num;
+	   
+}
+
+function fn(want) {
+    console.log('这里表示执行了一大堆各种代码');
+
+    // 返回Promise对象
+    return new Promise(function(resolve, reject) {
+        if (typeof want == 'function') {
+            resolve(want);
+        } else {
+            reject('TypeError: '+ want +'不是一个函数')
+        }
+    })
+}
+
+fn(want).then(function(want) {
+    want();
+    console.log(want());
+})
+
+fn('1234').catch(function(err) {
+    console.log(err);
+})
+		</script>
+	</body>
+</html>

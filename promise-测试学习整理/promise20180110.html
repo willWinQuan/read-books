@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>promise20180110</title>
+	</head>
+	<body>
+		<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(function(){
+			
+			//检测浏览器是否支持pormise
+			try{
+				new Promise(function () {});
+				console.log('支持pormise');
+			}catch(err){
+				alert('该浏览器版本太低，请升级浏览器版本或更换浏览器使用该产品！');
+				console.log('不支持promise');
+				console.log(err);
+				return;
+			}
+			
+			var url = 'https://hq.tigerbrokers.com/fundamental/finance_calendar/getType/2017-02-26/2017-06-10';
+
+			// 封装一个JQajax-promise请求的方法
+			function getJSON(type,data,url) {
+			    return new Promise(function(resolve, reject) {
+			    	$.ajax({
+			    		type:type,
+			    		url:url,
+			    		async:true,
+			    		data:data,
+			    		success:function(res){
+			    				try {
+			                        if(typeof res !== "object"){
+			                        	var errContent='数据类型有误';
+			                        	throw errContent;//thorw 抛出错误给catch接受 
+			                        	return;
+			                        };
+			                        
+                                    resolve(res);
+			                   } catch (errContent) {
+			                        reject(errContent);
+			                   };    
+			    		},
+			    		error :function(err){
+			    			var errContent='接口请求失败';
+			    			reject(errContent);
+			    		}
+			    	});
+			    })
+			};
+			
+			//调用
+			getJSON('get',{},url).then(resp => {
+				console.log(resp);
+			}).catch(errContent=>{
+				console.log(errContent);  
+			});
+			
+			
+			})
+		</script>
+	</body>
+</html>
