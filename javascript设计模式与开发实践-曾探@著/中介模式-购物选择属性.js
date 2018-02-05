@@ -67,6 +67,7 @@
   	   mediator.changed(this);
   };
   numberInput.oninput=function(){
-  	mediator.changed(this);
+  	  mediator.changed(this);
   };
+  
   
